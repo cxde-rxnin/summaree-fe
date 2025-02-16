@@ -2,7 +2,9 @@ import React, { useState } from 'react';
 import { ArrowRight } from 'lucide-react';
 import axios from 'axios';
 
-axios.defaults.baseURL = 'http://localhost:5000';
+// Access the environment variable
+const baseURL = import.meta.env.VITE_AXIOS_BASE_URL;
+axios.defaults.baseURL = baseURL;
 
 
 const MeetingForm = () => {
