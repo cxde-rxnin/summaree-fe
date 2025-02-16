@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { ArrowRight } from 'lucide-react';
 import axios from 'axios';
 
-axios.defaults.baseURL = 'http://localhost:5000'; 
+axios.defaults.baseURL = 'http://localhost:5000';
 
 
 const MeetingForm = () => {
@@ -35,7 +35,7 @@ const MeetingForm = () => {
       }, 2000);
     } catch (error) {
       setMessage('Failed to submit meeting');
-      console.error("Submission error:", error);  
+      console.error("Submission error:", error);
       if (error.response) {
         console.error("Response data:", error.response.data);
         console.error("Response status:", error.response.status);
@@ -48,12 +48,20 @@ const MeetingForm = () => {
     }
   };
 
+  const goToStage1 = () => {
+    setStage(1);
+    setUserEmail('');
+    setMeetingName('');
+    setMeetLink('');
+    setMessage('');
+  }
+
   return (
-    <div className="mt-24 flex items-center justify-center">
-      <div className="w-full max-w-md">
+    <div className="w-full h-full flex items-center justify-center">
+      <div className="w-sm">
         <div className="bg-white p-8">
-          <div className="text-center mb-8">
-            <h2 className="text-xl font-bold text-gray-900">Summarize Your meetings</h2>
+          <div className="text-center mb-4">
+            <button onClick={goToStage1} className="text-2xl text-black azeret-mono cursor-pointer">summaree</button>
           </div>
 
           {message && (
@@ -74,17 +82,17 @@ const MeetingForm = () => {
                   <input
                     type="email"
                     id="userEmail"
-                    className="w-full px-4 py-3 rounded-md border border-gray-300 focus:border-purple-600 focus:ring-0 focus:ring-purple-200 transition-colors"
+                    className="w-full px-4 py-3 rounded-2xl border border-gray-400/45 focus:outline-none"
                     value={userEmail}
                     onChange={(e) => setUserEmail(e.target.value)}
                     placeholder="Enter your email"
                     required
                   />
                 </div>
-                
+
                 <button
                   type="button"
-                  className="w-full flex items-center justify-center gap-2 bg-purple-600 hover:bg-purple-700 text-white py-3 px-4 rounded-md transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full flex items-center justify-center gap-2 bg-purple-500 hover:bg-purple-700 text-white py-3 px-4 rounded-full transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                   onClick={nextStage}
                   disabled={!userEmail}
                 >
@@ -103,7 +111,7 @@ const MeetingForm = () => {
                   <input
                     type="text"
                     id="meetingName"
-                    className="w-full px-4 py-3 rounded-md border border-gray-300 focus:border-purple-600 focus:ring-2 focus:ring-purple-200 transition-colors"
+                    className="w-full px-4 py-3 rounded-2xl border border-gray-400/45 focus:outline-none"
                     value={meetingName}
                     onChange={(e) => setMeetingName(e.target.value)}
                     placeholder="Enter meeting name"
@@ -113,7 +121,7 @@ const MeetingForm = () => {
 
                 <button
                   type="button"
-                  className="w-full flex items-center justify-center gap-2 bg-purple-600 hover:bg-purple-700 text-white py-3 px-4 rounded-md transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full flex items-center justify-center gap-2 bg-purple-500 hover:bg-purple-700 text-white py-3 px-4 rounded-full transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                   onClick={nextStage}
                   disabled={!meetingName}
                 >
@@ -132,7 +140,7 @@ const MeetingForm = () => {
                   <input
                     type="url"
                     id="meetLink"
-                    className="w-full px-4 py-3 rounded-md border border-gray-300 focus:border-purple-600 focus:ring-2 focus:ring-purple-200 transition-colors"
+                    className="w-full px-4 py-3 rounded-2xl border border-gray-400/45 focus:outline-none"
                     value={meetLink}
                     onChange={(e) => setMeetLink(e.target.value)}
                     placeholder="Enter meet link"
@@ -142,7 +150,7 @@ const MeetingForm = () => {
 
                 <button
                   type="submit"
-                  className="w-full bg-purple-600 hover:bg-purple-700 text-white py-3 px-4 rounded-md transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="w-full bg-purple-500 hover:bg-purple-700 text-white py-3 px-4 rounded-full transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                   disabled={!meetLink}
                 >
                   Schedule Meeting
