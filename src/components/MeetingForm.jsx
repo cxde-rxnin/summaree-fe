@@ -2,15 +2,14 @@ import React, { useState } from 'react';
 import { ArrowRight } from 'lucide-react';
 import axios from 'axios';
 
-// Access the environment variable
 const baseURL = import.meta.env.VITE_AXIOS_BASE_URL;
 axios.defaults.baseURL = baseURL;
-
 
 const MeetingForm = () => {
   const [stage, setStage] = useState(1);
   const [userEmail, setUserEmail] = useState('');
   const [meetingName, setMeetingName] = useState('');
+  const [meetingTime, setMeetingTime] = useState(''); // Time
   const [meetLink, setMeetLink] = useState('');
   const [message, setMessage] = useState('');
 
@@ -24,19 +23,21 @@ const MeetingForm = () => {
       const response = await axios.post('/api/meetings', {
         userEmail,
         meetingName,
-        meetLink
+        meetingTime
       });
 
-      setMessage('Meeting submitted successfully!');
+      setMessage(`Meeting scheduled successfully!  Meet Link: ${response.data.meetLink}`);
+      setMeetLink(response.data.meetLink); //Save the link
       setTimeout(() => {
         setUserEmail('');
         setMeetingName('');
-        setMeetLink('');
+        setMeetingTime('');
         setStage(1);
         setMessage('');
-      }, 2000);
+        setMeetLink('');
+      }, 5000);
     } catch (error) {
-      setMessage('Failed to submit meeting');
+      setMessage('Failed to schedule meeting');
       console.error("Submission error:", error);
       if (error.response) {
         console.error("Response data:", error.response.data);
@@ -54,6 +55,7 @@ const MeetingForm = () => {
     setStage(1);
     setUserEmail('');
     setMeetingName('');
+    setMeetingTime('');
     setMeetLink('');
     setMessage('');
   }
@@ -61,9 +63,9 @@ const MeetingForm = () => {
   return (
     <div className="w-full h-full flex items-center justify-center">
       <div className="w-sm">
-        <div className="bg-white p-8">
+        <div className=" p-8">
           <div className="text-center mb-4">
-            <button onClick={goToStage1} className="text-2xl text-black azeret-mono cursor-pointer">summaree</button>
+            <button onClick={goToStage1} className="text-2xl text-white azeret-mono cursor-pointer">summaree</button>
           </div>
 
           {message && (
@@ -78,7 +80,7 @@ const MeetingForm = () => {
             {stage === 1 && (
               <div className="space-y-4">
                 <div>
-                  <label htmlFor="userEmail" className="block text-sm font-medium text-gray-700 mb-1">
+                  <label htmlFor="userEmail" className="block text-sm font-medium text-white/60 mb-1">
                     Email Address
                   </label>
                   <input
@@ -107,7 +109,7 @@ const MeetingForm = () => {
             {stage === 2 && (
               <div className="space-y-4">
                 <div>
-                  <label htmlFor="meetingName" className="block text-sm font-medium text-gray-700 mb-1">
+                  <label htmlFor="meetingName" className="block text-sm font-medium text-white/60 mb-1">
                     Meeting Name
                   </label>
                   <input
@@ -136,16 +138,15 @@ const MeetingForm = () => {
             {stage === 3 && (
               <div className="space-y-4">
                 <div>
-                  <label htmlFor="meetLink" className="block text-sm font-medium text-gray-700 mb-1">
-                    Meet Link
+                  <label htmlFor="meetingTime" className="block text-sm font-medium text-white/60 mb-1">
+                    Meeting Time
                   </label>
                   <input
-                    type="url"
-                    id="meetLink"
+                    type="datetime-local"
+                    id="meetingTime"
                     className="w-full px-4 py-3 rounded-2xl border border-gray-400/45 focus:outline-none"
-                    value={meetLink}
-                    onChange={(e) => setMeetLink(e.target.value)}
-                    placeholder="Enter meet link"
+                    value={meetingTime}
+                    onChange={(e) => setMeetingTime(e.target.value)}
                     required
                   />
                 </div>
@@ -153,7 +154,7 @@ const MeetingForm = () => {
                 <button
                   type="submit"
                   className="w-full bg-purple-500 hover:bg-purple-700 text-white py-3 px-4 rounded-full transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
-                  disabled={!meetLink}
+                  disabled={!meetingTime}
                 >
                   Schedule Meeting
                 </button>
