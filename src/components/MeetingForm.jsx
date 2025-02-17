@@ -86,7 +86,7 @@ const MeetingForm = () => {
                   <input
                     type="email"
                     id="userEmail"
-                    className="w-full px-4 py-3 rounded-2xl border border-gray-400/45 focus:outline-none"
+                    className="w-full px-4 py-3 rounded-2xl border border-gray-400/45 focus:outline-none text-white"
                     value={userEmail}
                     onChange={(e) => setUserEmail(e.target.value)}
                     placeholder="Enter your email"
@@ -115,7 +115,7 @@ const MeetingForm = () => {
                   <input
                     type="text"
                     id="meetingName"
-                    className="w-full px-4 py-3 rounded-2xl border border-gray-400/45 focus:outline-none"
+                    className="w-full px-4 py-3 rounded-2xl border border-gray-400/45 focus:outline-none text-white"
                     value={meetingName}
                     onChange={(e) => setMeetingName(e.target.value)}
                     placeholder="Enter meeting name"
@@ -144,7 +144,7 @@ const MeetingForm = () => {
                   <input
                     type="datetime-local"
                     id="meetingTime"
-                    className="w-full px-4 py-3 rounded-2xl border border-gray-400/45 focus:outline-none"
+                    className="w-full px-4 py-3 rounded-2xl border border-gray-400/45 focus:outline-none text-white"
                     value={meetingTime}
                     onChange={(e) => setMeetingTime(e.target.value)}
                     required
